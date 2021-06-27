@@ -13,13 +13,14 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 def store(request, category_slug=None):# filter la page en fonction de la category
     categories = None
     products = None
+    
     if category_slug != None: 
         categories = get_object_or_404(Category, slug=category_slug)  # Element pour faire le filtre
         products = Products.objects.filter(category=categories, is_available=True).order_by('id')
         paginator = Paginator(products, 6)
         page = request.GET.get('page')# recuperation de la page dans request
         paged_products = paginator.get_page(page) # charger les données correspondantes dans la page
-        prouducts_count = products.count()
+        products_count = products.count()
     else:# implémenter une pagination
         products = Products.objects.all().filter(is_available=True).order_by('id')
         paginator = Paginator(products, 6)
@@ -47,8 +48,8 @@ def product_detail(request, category_slug, product_slug):
 
 def search(request): # fonction de recherche
     
-    if 'keyword' in request.GET: #vérifier que le mot keyword se t
-        keyword = request.GET['keyword']
+    if 'keyword' in request.GET: #vérifier que le mot keyword se trouve dans la request
+        keyword = request.GET['keyword'] #Recuperer la valeur de keyword
         if keyword:
             products = Products.objects.order_by('-create_date').filter(Q(description__icontains=keyword) | Q(product_name__icontains=keyword))
             productS_count = products.count()
