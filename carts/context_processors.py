@@ -4,13 +4,18 @@ from .models import (
 from .views import _cart_id
 
 def counter(request):
+
     cart_item_count = 0
-    if 'admin' in request.path:
+
+    if 'admin' in request.path: #exclure l'admin
         return{}
     else:
         try:       
             cart = Cart.objects.filter(cart_id = _cart_id(request))
-            cart_items = CartItem.objects.all().filter(cart=cart[:1])# filtrer avec id session
+            if request.user.is_authenticated:
+                cart_items = CartItem.objects.all().filter(user=request.user)
+            else:
+                cart_items = CartItem.objects.all().filter(cart=cart[:1])# filtrer avec id session pour en recuper 1
             for cart_item in cart_items:
                 cart_item_count += cart_item.quantity
         except Cart.DoesNotExist:
