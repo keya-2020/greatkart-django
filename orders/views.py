@@ -4,12 +4,13 @@ from datetime import \
 	datetime
 from os.path import \
 	isdir
-from django.http.response import JsonResponse
 
 import requests
 from django.core.mail import (
 	EmailMessage,
 	send_mail)
+from django.http.response import \
+	JsonResponse
 from django.shortcuts import (
 	redirect,
 	render)
@@ -18,12 +19,14 @@ from django.template.loader import \
 
 from carts.models import \
 	CartItem
+
 from store.models import (
 	Products,
-	Variation)
-
-from .forms import \
+	ReviewRating
+	)
+from .forms import (
 	OrderForm
+	)
 from .models import (
 	Order,
 	OrderProduct,

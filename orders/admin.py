@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Payment, Order, OrderProduct
 
 
+
 class orderProductInLine(admin.TabularInline):
     model = OrderProduct
     readonly_fields  = ('payment','user', 'product', 'quantity', 'product_price', 'ordered')

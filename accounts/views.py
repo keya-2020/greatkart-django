@@ -4,7 +4,6 @@ from django.contrib import (
 	messages)
 from django.contrib.auth.decorators import \
 	login_required
-from django.http.response import HttpResponse
 
 from django.shortcuts import (
 	redirect,
