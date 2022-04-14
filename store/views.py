@@ -11,7 +11,7 @@ from django.shortcuts import (
 	get_object_or_404,
 	redirect,
 	render)
-from winerror import OLE_S_MAC_CLIPFORMAT
+#from winerror import OLE_S_MAC_CLIPFORMAT
 from carts.models import \
 	CartItem
 from carts.views import \
@@ -22,6 +22,7 @@ from orders.models import OrderProduct
 from .forms import \
 	ReviewForm
 from .models import (
+	ProductGallery,
 	Products,
 	ReviewRating)
 
@@ -67,11 +68,14 @@ def product_detail(request, category_slug, product_slug):
 
     #GET the review
     reviews = ReviewRating.objects.filter(product_id = single_product.id, status = True)
+    
+    product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
     context = {
         'in_cart': in_cart,
         'single_product': single_product,
         'orderproduct' : orderproduct,
         'reviews'   : reviews,
+        'product_gallery':product_gallery,
     }
     return render(request, 'store/product_detail.html', context)
 
